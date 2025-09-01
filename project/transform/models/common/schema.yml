@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: fct_sales
+    description: "A monthly fact table"
+    columns:
+      - name: sales_id
+        description: "SK record"
+        tests:
+          - not_null
+      - name: calendar_year
+        description: "The calendar year of the record"
+        tests:
+          - not_null

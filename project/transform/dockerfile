@@ -1,0 +1,20 @@
+FROM ghcr.io/dbt-labs/dbt-postgres:1.7.0
+
+# Set working directory
+WORKDIR /usr/app
+
+# Copy project files into the image
+COPY . /usr/app
+
+# Set environment variable so dbt finds the profiles.yml during deps (optional)
+ENV DBT_PROFILES_DIR=/usr/app/profiles
+
+# Install dbt dependencies
+RUN dbt deps
+
+# Set the entrypoint to dbt
+ENTRYPOINT ["dbt"]
+
+CMD ["compile"]
+
+

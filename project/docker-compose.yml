@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: possword
+      POSTGRES_DB: mydatabase
+
+  app:
+    build: ./app
+    depends_on:
+      - db
+    volumes:
+      - ./app:/app
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: mydatabase
+      DB_USER: testuser
+      DB_PASSWORD: possword
+
+  # dbt Core service
+  dbt:
+    build: ./transform
+    depends_on:
+      - db # Ensures postgres starts before dbt
+    volumes:
+      - ./transform/:/usr/app
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: mydatabase
+      DB_USER: testuser
+      DB_PASSWORD: possword
+
+
+volumes:
+  postgres_data:
