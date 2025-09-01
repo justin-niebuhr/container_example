@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: example_source
+    schema: public
+    description: Example sales transaction tables
+    tables:
+      - name: warehouse_and_retail_sales
+        description: data.montgomerycountymd.gov This dataset contains a list of sales and movement data by item and department appended monthly
+        loaded_at_field: CREATED_AT::Timestamp
